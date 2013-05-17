@@ -23,16 +23,17 @@ _DOC = "doc"
 
 class DistributeThresholdHandler(BaseChangeThresholdHandler):
     def _canHandle(self, change, database):
-        if ((_DOC in change) and 
+        if ((_DOC in change) and
             (change[_DOC].get(_DOC_TYPE) ==_RESOURCE_DATA_TYPE)) :
                 return True
         return False
-        
+
     def _handle(self, change, database):
         log.debug('start distribute')
         data = json.dumps({"dist":"dist"})
+        log.error(appConfig['lr.distribute.url'])
         request = urllib2.Request(appConfig['lr.distribute.url'],data,{'Content-Type':'application/json; charset=utf-8'})
         log.debug(pprint.pformat(request))
-        response = urllib2.urlopen(request)   
-        log.debug('end distribute') 
-    
+        response = urllib2.urlopen(request)
+        log.debug('end distribute')
+
